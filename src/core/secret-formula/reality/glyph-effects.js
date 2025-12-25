@@ -122,8 +122,8 @@ export const glyphEffects = {
     bitmaskIndex: 5,
     isGenerated: true,
     glyphTypes: ["dilation"],
-    singleDesc: "Tachyon Galaxy threshold multiplier ×{value}",
-    genericDesc: "Tachyon Galaxy cost multiplier",
+    singleDesc: "Tachyon Amplifier threshold multiplier ×{value}",
+    genericDesc: "Tachyon Amplifier cost multiplier",
     shortDesc: "TG threshold ×{value}",
     effect: (level, strength) => 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 -
       GlyphAlteration.sacrificeBoost("dilation") / 50,

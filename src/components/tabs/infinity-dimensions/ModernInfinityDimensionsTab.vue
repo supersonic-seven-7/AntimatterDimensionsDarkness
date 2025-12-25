@@ -40,7 +40,7 @@ export default {
   methods: {
     update() {
       this.showLockedDimCostNote = !InfinityDimension(8).isUnlocked;
-      this.isEC9Running = EternityChallenge(9).isRunning;
+      this.isEC9Running = EternityChallenge(9).isRunning || UltimateChallenge(3).isRunning;
       this.infinityPower.copyFrom(Currency.infinityPower);
       this.conversionRate = InfinityDimensions.powerConversionRate;
       if (this.isEC9Running) {
@@ -49,8 +49,8 @@ export default {
         this.dimMultiplier.copyFrom(this.infinityPower.pow(this.conversionRate).max(1));
       }
       this.powerPerSecond.copyFrom(InfinityDimension(1).productionPerSecond);
-      this.incomeType = EternityChallenge(7).isRunning ? "Seventh Dimensions" : "Infinity Power";
-      this.isEC8Running = EternityChallenge(8).isRunning;
+      this.incomeType = (EternityChallenge(7).isRunning || UltimateChallenge(3).isRunning) ? "Seventh Dimensions" : "Infinity Power";
+      this.isEC8Running = EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning;
       if (this.isEC8Running) {
         this.EC8PurchasesLeft = player.eterc8ids;
       }

@@ -196,7 +196,7 @@ export const perks = {
     label: "REAL",
     family: PERK_FAMILY.REALITY,
     get description() {
-      return `Auto-unlocks Reality once you have ${format(DC.E4000)} Eternity Points
+      return `Auto-unlocks Reality once you have ${format(DC.E8000)} Eternity Points
         and have unlocked Time Dimension 8.`;
     },
     automatorPoints: 10,

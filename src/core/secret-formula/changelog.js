@@ -9,6 +9,24 @@ export const changelog = [
    * }
    */
   {
+    date: [2025, 12, 25],
+    name: "Dilate the Dark",
+    info: `
+<b>Things changed:</b><br>
+<ul>
+<li>Added Time Dilation</li>
+<li>Added Time Dimensions 5-8</li>
+<li>Added Tachyon Amplifiers</li>
+<li>Rebalanced Dilation Upgrades</li>
+<li>Buffed gain of Dilated Time</li>
+<li>Rebalanced remaining pre-Reality Achievements</li>
+<li>Added THE ULTIMATE CHALLENGE III</li>
+<li>Content is currently up to Reality. Do not expect new content any time soon. Goodbye.</li>
+</ul>
+<br>
+`
+  },
+  {
     date: [2025, 10, 31],
     name: "Light in the Darkness",
     info: `

@@ -37,6 +37,7 @@ class UltimateChallengeState extends GameMechanicState {
     if (PlayerProgress.realityUnlocked()) return true;
     if (this.id === 1) return PlayerProgress.eternityUnlocked();
     if (this.id === 2) return player.records.thisEternity.maxAM.gte(DC.E3_6E6) || (Achievement(133).isUnlocked && !Pelle.isDoomed);
+    if (this.id === 3) return player.records.thisReality.maxAM.gte(DC.E3E9);
     return PlayerProgress.realityUnlocked();
   }
 
@@ -57,14 +58,19 @@ class UltimateChallengeState extends GameMechanicState {
 
   start() {
     if (!this.isUnlocked || this.isRunning) return;
-    // Forces big crunch reset but ensures IP gain, if any.
-    bigCrunchReset(true, true);
+    if (this.id === 1 || this.id === 2) {
+      // Forces big crunch reset but ensures IP gain, if any.
+      bigCrunchReset(true, true);
+    }
+    if (this.id === 3) {
+      eternity(true);
+    }
     player.challenge.normal.current = 0;
     player.challenge.infinity.current = 0;
     player.challenge.eternity.current = 0;
     player.challenge.ultimate.current = this.id;
     if (!Enslaved.isRunning) Tab.dimensions.antimatter.show();
-    player.break = true;
+    if (this.id !== 1) player.break = true;
   }
 
   get isCompleted() {
@@ -84,6 +90,7 @@ class UltimateChallengeState extends GameMechanicState {
   get goal() {
     if (this.id === 1) return Decimal.NUMBER_MAX_VALUE;
     if (this.id === 2) return DC.E1_6E6;
+    if (this.id === 3) return DC.E1E15;
   }
 
   get reward() {

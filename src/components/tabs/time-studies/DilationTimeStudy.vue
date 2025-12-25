@@ -37,7 +37,7 @@ export default {
       }
       if (this.id === 6) {
         const achRows = Perk.firstPerk.isBought ? "" : ` and ${formatInt(13)} rows of Achievements`;
-        return `Requirement: ${format("1e4000")} Eternity Points${achRows}`;
+        return `Requirement: ${format("1e8000")} Eternity Points${achRows}`;
       }
       return "";
     },

@@ -8,7 +8,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get name() {
-    return [`Dilated Time Multiplier`, `Tachyon Galaxy Threshold`, "Tachyon Particle Multiplier"][this.id - 1];
+    return [`Dilated Time Multiplier`, `Tachyon Amplifier Threshold`, "Tachyon Particle Multiplier"][this.id - 1];
   }
 
   get interval() {

@@ -50,7 +50,7 @@ export default {
       this.hasRealityButton = PlayerProgress.realityUnlocked() || TimeStudy.reality.isBought;
       this.purchasedTickspeed = player.totalTickBought;
       this.freeTickspeed = FreeTickspeed.amount;
-      this.isEC9 = EternityChallenge(9).isRunning;
+      this.isEC9 = EternityChallenge(9).isRunning || UltimateChallenge(3).isRunning;
       this.isVisible = Tickspeed.isUnlocked || this.isEC9;
       if (!this.isVisible) return;
       this.mult.copyFrom(Tickspeed.multiplier);

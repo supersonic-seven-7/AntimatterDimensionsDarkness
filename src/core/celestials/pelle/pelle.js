@@ -245,7 +245,7 @@ export const Pelle = {
         (based on ${wordShift.wordCycle(PelleRifts.vacuum.name)})`;
       case "dilation":
         return `Dilated Time gain ${formatX(Decimal.pow(player.dilation.totalTachyonGalaxies, 1.5).max(1), 2)}
-          (based on Tachyon Galaxies)`;
+          (based on Tachyon Amplifiers)`;
       case "power":
         return `Galaxies are ${formatPercents(0.02)} stronger`;
       case "companion":

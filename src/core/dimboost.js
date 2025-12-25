@@ -41,6 +41,7 @@ export class DimBoost {
       );
     if (UltimateChallenge(2).isRunning) boost = boost.times(0.1);
     if (GlyphAlteration.isAdded("effarig")) boost = boost.pow(getSecondaryGlyphEffect("effarigforgotten"));
+    boost = boost.pow(getTotalTachyonAmplifierPower());
     return boost;
   }
 
@@ -60,7 +61,7 @@ export class DimBoost {
   }
 
   static get maxBoosts() {
-    if (Ra.isRunning || InfinityChallenge(10).isRunning || UltimateChallenge(2).isRunning || EternityChallenge(6).isRunning) {
+    if (Ra.isRunning || InfinityChallenge(10).isRunning || UltimateChallenge(2).isRunning || EternityChallenge(6).isRunning || UltimateChallenge(3).isRunning) {
       // Ra makes boosting impossible. Note that this function isn't called
       // when giving initial boosts, so the player will still get those.
       return 0;
@@ -98,6 +99,7 @@ export class DimBoost {
       if (InfinityChallenge(12).isRunning) return "Locked (Infinity Challenge 12)";
       if (UltimateChallenge(2).isRunning) return "Locked (THE ULTIMATE CHALLENGE II)";
       if (EternityChallenge(6).isRunning) return "Locked (Eternity Challenge 6)";
+      if (UltimateChallenge(3).isRunning) return "Locked (THE ULTIMATE CHALLENGE III)";
       if (NormalChallenge(8).isRunning) return "Locked (8th Antimatter Dimension Autobuyer Challenge)";
       if (UltimateChallenge(1).isRunning) return "Locked (THE ULTIMATE CHALLENGE I)";
     }
@@ -121,7 +123,7 @@ export class DimBoost {
     } else if (tier === 8) {
       amount += Math.round((targetResets - 5) * (15 - discount));
     }
-    if (EternityChallenge(5).isRunning) {
+    if (EternityChallenge(5).isRunning || UltimateChallenge(3).isRunning) {
       amount += Math.pow(targetResets - 1, 3) + targetResets - 1;
     }
 
@@ -143,7 +145,7 @@ export class DimBoost {
     let newUnlock = "";
     if (!allNDUnlocked && boosts < DimBoost.maxDimensionsUnlockable - 4) {
       newUnlock = `unlock the ${boosts + 5}th Dimension`;
-    } else if (boosts === 4 && !NormalChallenge(10).isRunning && !UltimateChallenge(1).isRunning && !EternityChallenge(3).isRunning) {
+    } else if (boosts === 4 && !NormalChallenge(10).isRunning && !UltimateChallenge(1).isRunning && !EternityChallenge(3).isRunning && !UltimateChallenge(3).isRunning) {
       newUnlock = "unlock Sacrifice";
     }
 

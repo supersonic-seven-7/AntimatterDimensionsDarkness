@@ -154,9 +154,6 @@ export const InfinityChallenges = {
       if (InfinityChallenges.nextIC !== undefined) {
         GameUI.notify.infinity(`You have unlocked Infinity Challenge ${ic.id}`, 7000);
       }
-      if (InfinityChallenges.nextIC === undefined) {
-        GameUI.notify.infinity(`You have unlocked THE ULTIMATE CHALLENGE II`, 20000);
-      }
       TabNotification.ICUnlock.tryTrigger();
     }
   },

@@ -102,6 +102,9 @@ export default {
       if (this.activeChallengeNames.length === 0) {
         return "the Dark Universe (no active challenges). Good luck.";
       }
+      if (player.challenge.ultimate.current === 3) {
+        return "THE ULTIMATE CHALLENGE III";
+      }
       if (player.challenge.ultimate.current === 2) {
         return "THE ULTIMATE CHALLENGE II";
       }

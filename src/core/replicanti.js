@@ -275,7 +275,8 @@ export function replicantiBoosterMult() {
     .times(EternityChallenge(8).reward.effectOrDefault(1))
     .timesEffectOf(TimeStudy(212))
     .timesEffectOf(TimeStudy(232))
-    .powEffectOf(TimeStudy(213));
+    .powEffectOf(TimeStudy(213))
+    .pow(getTotalTachyonAmplifierPower());
 }
 
 export function replicantiMult() {
@@ -327,7 +328,7 @@ class ReplicantiUpgradeState {
     Currency.infinityPoints.subtract(this.cost);
     this.baseCost = Decimal.times(this.baseCost, this.costIncrease);
     this.value = this.nextValue;
-    if (EternityChallenge(8).isRunning) player.eterc8repl--;
+    if (EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning) player.eterc8repl--;
     GameUI.update();
   }
 
@@ -452,7 +453,7 @@ export const ReplicantiUpgrade = {
 
     get costIncrease() {
       const galaxies = this.value;
-      let increase = EternityChallenge(6).isRunning
+      let increase = (EternityChallenge(6).isRunning || UltimateChallenge(3).isRunning)
         ? DC.E2.pow(galaxies).times(DC.E2)
         : DC.E5.pow(galaxies).times(DC.E25);
       if (galaxies >= this.distantRGStart) {
@@ -487,8 +488,8 @@ export const ReplicantiUpgrade = {
 
     baseCostAfterCount(count) {
       const logBase = 170;
-      const logBaseIncrease = EternityChallenge(6).isRunning ? 2 : 25;
-      const logCostScaling = EternityChallenge(6).isRunning ? 2 : 5;
+      const logBaseIncrease = (EternityChallenge(6).isRunning || UltimateChallenge(3).isRunning) ? 2 : 25;
+      const logCostScaling = (EternityChallenge(6).isRunning || UltimateChallenge(3).isRunning) ? 2 : 5;
       const distantReplicatedGalaxyStart = 100 + Effects.sum(TimeStudy(223), TimeStudy(224), GlyphSacrifice.replication);
       const remoteReplicatedGalaxyStart = 1000 + Effects.sum(TimeStudy(223), TimeStudy(224), GlyphSacrifice.replication);
       let logCost = logBase + count * logBaseIncrease + (count * (count - 1) / 2) * logCostScaling;

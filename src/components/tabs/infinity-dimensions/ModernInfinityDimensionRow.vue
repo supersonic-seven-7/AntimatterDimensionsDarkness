@@ -98,7 +98,7 @@ export default {
         this.capIP.copyFrom(dimension.hardcapIPAmount);
         this.hardcap = dimension.purchaseCap;
       }
-      this.isEC8Running = EternityChallenge(8).isRunning;
+      this.isEC8Running = EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning;
       this.isAutobuyerOn = Autobuyer.infinityDimension(tier).isActive;
       this.eternityReached = PlayerProgress.eternityUnlocked();
       this.enslavedRunning = Enslaved.isRunning;

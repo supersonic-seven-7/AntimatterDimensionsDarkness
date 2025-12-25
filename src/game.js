@@ -271,7 +271,7 @@ export function addRealityTime(time, realTime, rm, level, realities, ampFactor, 
 }
 
 export function gainedInfinities() {
-  if (EternityChallenge(4).isRunning || Pelle.isDisabled("InfinitiedMults")) {
+  if (EternityChallenge(4).isRunning || UltimateChallenge(3).isRunning || Pelle.isDisabled("InfinitiedMults")) {
     return DC.D1;
   }
   let infGain = Effects.max(
@@ -327,7 +327,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   }
 
   if (effects.includes(GAME_SPEED_EFFECT.FIXED_SPEED)) {
-    if (EternityChallenge(12).isRunning) {
+    if (EternityChallenge(12).isRunning || UltimateChallenge(3).isRunning) {
       return 1 / 1000;
     }
   }
@@ -497,7 +497,7 @@ export function gameLoop(passDiff, options = {}) {
   GameCache.totalIPMult.invalidate();
 
   const blackHoleDiff = realDiff;
-  const fixedSpeedActive = EternityChallenge(12).isRunning;
+  const fixedSpeedActive = EternityChallenge(12).isRunning || UltimateChallenge(3).isRunning;
   if (!Enslaved.isReleaseTick && !fixedSpeedActive) {
     let speedFactor;
     if (options.blackHoleSpeedup === undefined) {
@@ -528,7 +528,7 @@ export function gameLoop(passDiff, options = {}) {
   player.celestials.ra.peakGamespeed = Math.max(player.celestials.ra.peakGamespeed, getGameSpeedupFactor());
   Enslaved.isReleaseTick = false;
 
-  if (Currency.tachyonParticles.gte(1) || PlayerProgress.realityUnlocked()) {
+  if (PlayerProgress.realityUnlocked()) {
     player.anticheat = true;
     Modal.message.show(`Hey there, cheater. Looks like you're trying to access untested content. We're going to need
     you to wait until the content is tested before you can play this. So what has this treachery cost you? Well first of
@@ -548,7 +548,7 @@ export function gameLoop(passDiff, options = {}) {
     player.records.thisInfinity.realTime += realDiff;
     player.records.thisInfinity.time += diff;
     player.records.thisEternity.realTime += realDiff;
-    if (Enslaved.isRunning && Enslaved.feltEternity && !EternityChallenge(12).isRunning) {
+    if (Enslaved.isRunning && Enslaved.feltEternity && !EternityChallenge(12).isRunning && !UltimateChallenge(3).isRunning) {
       player.records.thisEternity.time += diff * (1 + Currency.eternities.value.clampMax(1e66).toNumber());
     } else {
       player.records.thisEternity.time += diff;
@@ -598,6 +598,10 @@ export function gameLoop(passDiff, options = {}) {
 
   if (PlayerProgress.dilationUnlocked()) {
     Currency.dilatedTime.add(getDilationGainPerSecond().times(diff / 1000));
+  }
+
+  if (UltimateChallenge(3).isRunning) {
+    player.records.thisReality.bestAMUC3 = Decimal.max(player.antimatter, player.records.thisReality.bestAMUC3);
   }
 
   updateTachyonGalaxies();
@@ -702,7 +706,7 @@ function passivePrestigeGen() {
     player.reality.partEternitied = player.reality.partEternitied.sub(player.reality.partEternitied.floor());
   }
 
-  if (!EternityChallenge(4).isRunning) {
+  if (!EternityChallenge(4).isRunning && !UltimateChallenge(3).isRunning) {
     let infGen = DC.D0;
     if (BreakInfinityUpgrade.infinitiedGen.isBought) {
       // Multipliers are done this way to explicitly exclude ach87 and TS32
@@ -855,7 +859,7 @@ function updateImaginaryMachines(diff) {
 
 function updateTachyonGalaxies() {
   const tachyonGalaxyMult = Effects.max(1, DilationUpgrade.doubleGalaxies);
-  const tachyonGalaxyThreshold = 1000;
+  const tachyonGalaxyThreshold = 100;
   const thresholdMult = getTachyonGalaxyMult();
   player.dilation.baseTachyonGalaxies = Math.max(player.dilation.baseTachyonGalaxies,
     1 + Math.floor(Decimal.log(Currency.dilatedTime.value.dividedBy(1000), thresholdMult)));

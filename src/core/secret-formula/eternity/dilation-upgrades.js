@@ -53,8 +53,8 @@ export const dilationUpgrades = {
     increment: 100,
     description: () =>
       (Perk.bypassTGReset.isBought && !Pelle.isDoomed
-        ? "Reset Tachyon Galaxies, but lower their threshold"
-        : "Reset Dilated Time and Tachyon Galaxies, but lower their threshold"),
+        ? "Reset Tachyon Amplifiers, but lower their threshold"
+        : "Reset Dilated Time and Tachyon Amplifiers, but lower their threshold"),
     // The 38th purchase is at 1e80, and is the last purchase.
     effect: bought => (bought < 38 ? Math.pow(0.8, bought) : 0),
     formatEffect: effect => {
@@ -87,7 +87,7 @@ export const dilationUpgrades = {
   doubleGalaxies: {
     id: 4,
     cost: 5e6,
-    description: () => `Gain twice as many Tachyon Galaxies, up to ${formatInt(500)} base Galaxies`,
+    description: () => `Gain twice as many Tachyon Amplifiers, up to ${formatInt(50)} base Amplifiers`,
     effect: 2
   },
   tdMultReplicanti: {
@@ -95,7 +95,7 @@ export const dilationUpgrades = {
     cost: 1e9,
     description: () => {
       const rep10 = replicantiMult().pLog10();
-      let multiplier = "0.1";
+      let multiplier = "0.01";
       if (rep10 > 9000) {
         const ratio = DilationUpgrade.tdMultReplicanti.effectValue.pLog10() / rep10;
         if (ratio < 0.095) {
@@ -106,7 +106,7 @@ export const dilationUpgrades = {
         effect above ${formatX(DC.E9000)}`;
     },
     effect: () => {
-      let rep10 = replicantiMult().pLog10() * 0.1;
+      let rep10 = replicantiMult().pLog10() * 0.01;
       rep10 = rep10 > 9000 ? 9000 + 0.5 * (rep10 - 9000) : rep10;
       return Decimal.pow10(rep10);
     },
@@ -116,7 +116,7 @@ export const dilationUpgrades = {
     id: 6,
     cost: 5e7,
     description: "Antimatter Dimension multiplier based on Dilated Time, unaffected by Time Dilation",
-    effect: () => Currency.dilatedTime.value.pow(308).clampMin(1),
+    effect: () => Currency.dilatedTime.value.pow(3000).clampMin(1),
     formatEffect: value => formatX(value, 2, 1)
   },
   ipMultDT: {
@@ -135,8 +135,8 @@ export const dilationUpgrades = {
   dilationPenalty: {
     id: 9,
     cost: 1e11,
-    description: () => `Reduce the Dilation penalty (${formatPow(1.05, 2, 2)} after reduction)`,
-    effect: 1.05,
+    description: () => `Reduce the Dilation penalty (${formatPow(1.1, 2, 2)} after reduction)`,
+    effect: 1.1,
   },
   ttGenerator: {
     id: 10,
@@ -161,7 +161,7 @@ export const dilationUpgrades = {
     initialCost: 1e15,
     increment: 1000,
     pelleOnly: true,
-    description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
+    description: "Multiply Tachyon Amplifiers gained, applies after TA doubling upgrade",
     effect: bought => bought + 1,
     formatEffect: value => `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`,
     formatCost: value => format(value, 2),
@@ -182,7 +182,7 @@ export const dilationUpgrades = {
     id: 14,
     cost: 1e45,
     pelleOnly: true,
-    description: "Apply a cube root to the Tachyon Galaxy threshold",
+    description: "Apply a cube root to the Tachyon Amplifier threshold",
     effect: 1 / 3
   },
   flatDilationMult: {

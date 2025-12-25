@@ -66,7 +66,7 @@ export default {
         if (PelleRifts.recursion.milestones[2].canBeApplied || GalaxyGenerator.spentGalaxies > 0) {
           setProgress(Currency.infinityPoints.value, Tesseracts.nextCost, "Percentage to next Tesseract");
         } else if (PelleStrikes.dilation.hasStrike) {
-          setProgress(Currency.eternityPoints.value, DC.E4000, "Percentage to Galaxy Generator");
+          setProgress(Currency.eternityPoints.value, DC.E8000, "Percentage to Galaxy Generator");
         } else if (PelleStrikes.ECs.hasStrike) {
           setLinearProgress(
             (Math.min(Currency.timeTheorems.max.toNumber() / 12900, 1) +
@@ -89,7 +89,7 @@ export default {
         // Show all other goals from the top down, starting at features in the highest prestige layer
         setProgress(Currency.infinityPoints.value, Tesseracts.nextCost, "Percentage to next Tesseract");
       } else if (PlayerProgress.dilationUnlocked()) {
-        setProgress(Currency.eternityPoints.value, DC.E4000, "Percentage to Reality");
+        setProgress(Currency.eternityPoints.value, DC.E8000, "Percentage to Reality");
       } else if (InfinityDimension(8).isUnlocked) {
         setProgress(Currency.infinityPoints.value, Player.eternityGoal, "Percentage to Eternity");
       } else if (player.break) {

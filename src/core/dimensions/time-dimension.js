@@ -121,7 +121,7 @@ export function timeDimensionCommonMultiplier() {
       PelleRifts.chaos
     );
 
-  if (EternityChallenge(9).isRunning) {
+  if (EternityChallenge(9).isRunning || UltimateChallenge(3).isRunning) {
     mult = mult.times(
       Decimal.pow(
         Math.clampMin(Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate / 7).log2(), 1),
@@ -200,7 +200,7 @@ class TimeDimensionState extends DimensionState {
   get multiplier() {
     const tier = this._tier;
 
-    if (EternityChallenge(11).isRunning) return DC.D1;
+    if (EternityChallenge(11).isRunning || UltimateChallenge(3).isRunning) return DC.D1;
     let mult = GameCache.timeDimensionCommonMultiplier.value
       .timesEffectsOf(
         tier === 1 ? TimeStudy(11) : null,
@@ -234,18 +234,18 @@ class TimeDimensionState extends DimensionState {
   }
 
   get productionPerSecond() {
-    if (EternityChallenge(1).isRunning || EternityChallenge(10).isRunning ||
+    if (EternityChallenge(1).isRunning || EternityChallenge(10).isRunning || UltimateChallenge(3).isRunning ||
     (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
       return DC.D0;
     }
-    if (EternityChallenge(11).isRunning) {
+    if (EternityChallenge(11).isRunning || UltimateChallenge(3).isRunning) {
       return this.amount;
     }
     let production = this.amount.times(this.multiplier);
-    if (EternityChallenge(7).isRunning) {
+    if (EternityChallenge(7).isRunning || UltimateChallenge(3).isRunning) {
       production = production.times(Tickspeed.perSecond);
     }
-    if (this._tier === 1 && !EternityChallenge(7).isRunning) {
+    if (this._tier === 1 && !EternityChallenge(7).isRunning && !UltimateChallenge(3).isRunning) {
       production = production.pow(getAdjustedGlyphEffect("timeshardpow"));
     }
     return production;
@@ -265,6 +265,7 @@ class TimeDimensionState extends DimensionState {
     const tier = this.tier;
     if (EternityChallenge(1).isRunning ||
       EternityChallenge(10).isRunning ||
+      UltimateChallenge(3).isRunning ||
       (Laitela.isRunning && tier > Laitela.maxAllowedDimension)) {
       return false;
     }
@@ -326,7 +327,7 @@ export const TimeDimensions = {
       TimeDimension(tier).produceDimensions(TimeDimension(tier - 1), diff / 10);
     }
 
-    if (EternityChallenge(7).isRunning) {
+    if (EternityChallenge(7).isRunning || UltimateChallenge(3).isRunning) {
       TimeDimension(1).produceDimensions(InfinityDimension(8), diff);
     } else {
       TimeDimension(1).produceCurrency(Currency.timeShards, diff);

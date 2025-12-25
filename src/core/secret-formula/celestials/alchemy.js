@@ -163,8 +163,8 @@ export const alchemyResources = {
     tier: 2,
     uiOrder: 4,
     unlockedAt: 12,
-    description: "increases the strength of Tachyon Galaxies based on Replicanti",
-    formatEffect: value => `Tachyon Galaxies are ${formatPercents(value, 2, 2)} stronger
+    description: "increases the strength of Tachyon Amplifiers based on Replicanti",
+    formatEffect: value => `Tachyon Amplifiers are ${formatPercents(value, 2, 2)} stronger
       per ${format(DC.E1E6)} Replicanti`,
     reagents: [
       {

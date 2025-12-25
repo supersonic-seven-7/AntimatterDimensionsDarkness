@@ -116,7 +116,7 @@ class InfinityDimensionState extends DimensionState {
       // We need a extra 10x here (since ID8 production is per-second and
       // other ID production is per-10-seconds).
       EternityChallenge(7).reward.applyEffect(v => toGain = v.times(10));
-      if (EternityChallenge(7).isRunning) EternityChallenge(7).applyEffect(v => toGain = v.times(10));
+      if (EternityChallenge(7).isRunning || UltimateChallenge(3).isRunning) EternityChallenge(7).applyEffect(v => toGain = v.times(10));
     } else {
       toGain = InfinityDimension(tier + 1).productionPerSecond;
     }
@@ -125,15 +125,15 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get productionPerSecond() {
-    if (EternityChallenge(2).isRunning || EternityChallenge(10).isRunning ||
+    if (EternityChallenge(2).isRunning || EternityChallenge(10).isRunning || UltimateChallenge(3).isRunning ||
       (Laitela.isRunning && this.tier > Laitela.maxAllowedDimension)) {
       return DC.D0;
     }
     let production = this.amount;
-    if (EternityChallenge(11).isRunning) {
+    if (EternityChallenge(11).isRunning || UltimateChallenge(3).isRunning) {
       return production;
     }
-    if (EternityChallenge(7).isRunning) {
+    if (EternityChallenge(7).isRunning || UltimateChallenge(3).isRunning) {
       production = production.times(Tickspeed.perSecond);
     }
     return production.times(this.multiplier);
@@ -141,7 +141,7 @@ class InfinityDimensionState extends DimensionState {
 
   get multiplier() {
     const tier = this.tier;
-    if (EternityChallenge(11).isRunning) return DC.D1;
+    if (EternityChallenge(11).isRunning || UltimateChallenge(3).isRunning) return DC.D1;
     let mult = GameCache.infinityDimensionCommonMultiplier.value
       .timesEffectsOf(
         tier === 1 ? Achievement(94) : null,
@@ -184,6 +184,7 @@ class InfinityDimensionState extends DimensionState {
     const tier = this.tier;
     if (EternityChallenge(2).isRunning ||
       EternityChallenge(10).isRunning ||
+      UltimateChallenge(3).isRunning ||
       (Laitela.isRunning && tier > Laitela.maxAllowedDimension)) {
       return false;
     }
@@ -269,7 +270,7 @@ class InfinityDimensionState extends DimensionState {
     this.amount = this.amount.plus(10);
     this.baseAmount += 10;
 
-    if (EternityChallenge(8).isRunning) {
+    if (EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning) {
       player.eterc8ids -= 1;
     }
 
@@ -287,7 +288,7 @@ class InfinityDimensionState extends DimensionState {
     }
 
     let purchasesUntilHardcap = this.purchaseCap - this.purchases;
-    if (EternityChallenge(8).isRunning) {
+    if (EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning) {
       purchasesUntilHardcap = Math.clampMax(purchasesUntilHardcap, player.eterc8ids);
     }
 
@@ -306,7 +307,7 @@ class InfinityDimensionState extends DimensionState {
     this.amount = this.amount.plus(10 * costScaling.purchases);
     this.baseAmount += 10 * costScaling.purchases;
 
-    if (EternityChallenge(8).isRunning) {
+    if (EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning) {
       player.eterc8ids -= costScaling.purchases;
     }
     return true;
@@ -374,11 +375,12 @@ export const InfinityDimensions = {
   canBuy() {
     return !EternityChallenge(2).isRunning &&
       !EternityChallenge(10).isRunning &&
-      (!EternityChallenge(8).isRunning || player.eterc8ids > 0);
+      !UltimateChallenge(3).isRunning &&
+      (!EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning || player.eterc8ids > 0);
   },
 
   canAutobuy() {
-    return this.canBuy() && !EternityChallenge(8).isRunning;
+    return this.canBuy() && !EternityChallenge(8).isRunning && !UltimateChallenge(3).isRunning;
   },
 
   tick(diff) {
@@ -386,7 +388,7 @@ export const InfinityDimensions = {
       InfinityDimension(tier).produceDimensions(InfinityDimension(tier - 1), diff / 10);
     }
 
-    if (EternityChallenge(7).isRunning) {
+    if (EternityChallenge(7).isRunning || UltimateChallenge(3).isRunning) {
       if (!NormalChallenge(10).isRunning || UltimateChallenge(1).isRunning) {
         InfinityDimension(1).produceDimensions(AntimatterDimension(7), diff);
       }

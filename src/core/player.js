@@ -328,6 +328,7 @@ window.player = {
       maxDT: DC.D0,
       bestRSmin: 0,
       bestRSminVal: 0,
+      bestAMUC3: DC.D0,
     },
     bestReality: {
       time: Number.MAX_VALUE,
@@ -930,7 +931,7 @@ export const Player = {
   },
 
   get isInAntimatterChallenge() {
-    return NormalChallenge.isRunning || InfinityChallenge.isRunning || UltimateChallenge.isRunning;
+    return (NormalChallenge.isRunning || InfinityChallenge.isRunning || UltimateChallenge.isRunning) && !UltimateChallenge(3).isRunning;
   },
 
   get antimatterChallenge() {
@@ -938,7 +939,7 @@ export const Player = {
   },
 
   get isInAnyChallenge() {
-    return this.isInAntimatterChallenge || EternityChallenge.isRunning;
+    return this.isInAntimatterChallenge || EternityChallenge.isRunning || UltimateChallenge(3).isRunning;
   },
 
   get anyChallenge() {
@@ -948,7 +949,7 @@ export const Player = {
   get canCrunch() {
     if (Enslaved.isRunning && Enslaved.BROKEN_CHALLENGES.includes(NormalChallenge.current?.id)) return false;
     const challenge = NormalChallenge.current || InfinityChallenge.current || UltimateChallenge.current;
-    const goal = challenge === undefined ? Decimal.NUMBER_MAX_VALUE : challenge.goal;
+    const goal = challenge === undefined || UltimateChallenge(3).isRunning ? Decimal.NUMBER_MAX_VALUE : challenge.goal;
     return player.records.thisInfinity.maxAM.gte(goal);
   },
 
@@ -974,12 +975,12 @@ export const Player = {
 
   get infinityGoal() {
     const challenge = NormalChallenge.current || InfinityChallenge.current || UltimateChallenge.current;
-    return challenge === undefined ? Decimal.NUMBER_MAX_VALUE : challenge.goal;
+    return challenge === undefined || UltimateChallenge(3).isRunning ? Decimal.NUMBER_MAX_VALUE : challenge.goal;
   },
 
   get infinityLimit() {
     const challenge = NormalChallenge.current || InfinityChallenge.current || UltimateChallenge.current;
-    return challenge === undefined ? Decimal.MAX_VALUE : challenge.goal;
+    return challenge === undefined || UltimateChallenge(3).isRunning ? Decimal.MAX_VALUE : challenge.goal;
   },
 
   get eternityGoal() {

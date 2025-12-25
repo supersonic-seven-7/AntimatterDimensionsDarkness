@@ -29,7 +29,7 @@ export class ReplicantiUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   tick() {
-    if (EternityChallenge(8).isRunning) return;
+    if (EternityChallenge(8).isRunning || UltimateChallenge(3).isRunning) return;
     super.tick();
     ReplicantiUpgrade[this._upgradeName].autobuyerTick();
   }

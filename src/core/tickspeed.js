@@ -126,6 +126,7 @@ export const Tickspeed = {
 
   get isAvailableForPurchase() {
     return this.isUnlocked &&
+      !UltimateChallenge(3).isRunning &&
       !EternityChallenge(9).isRunning &&
       !Laitela.continuumActive &&
       (player.break || this.cost.lt(Decimal.NUMBER_MAX_VALUE));

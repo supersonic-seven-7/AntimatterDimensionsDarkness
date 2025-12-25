@@ -44,7 +44,7 @@ export class Galaxy {
 
     const type = Galaxy.typeAt(galaxies);
 
-    if (type === GALAXY_TYPE.DISTANT && EternityChallenge(5).isRunning) {
+    if (type === GALAXY_TYPE.DISTANT && (EternityChallenge(5).isRunning || UltimateChallenge(3).isRunning)) {
       amount += Math.pow(galaxies, 2) + galaxies;
     } else if (type === GALAXY_TYPE.DISTANT || type === GALAXY_TYPE.REMOTE) {
       const galaxyCostScalingStart = this.costScalingStart;
@@ -79,7 +79,7 @@ export class Galaxy {
   }
   
   static get canBeBought() {
-    if (EternityChallenge(6).isRunning && !Enslaved.isRunning) return false;
+    if ((EternityChallenge(6).isRunning || UltimateChallenge(3).isRunning) && !Enslaved.isRunning) return false;
     if (NormalChallenge(8).isRunning || UltimateChallenge(1).isRunning || InfinityChallenge(8).isRunning || UltimateChallenge(2).isRunning) return false;
     if (player.records.thisInfinity.maxAM.gt(Player.infinityGoal) &&
        (!player.break || Player.isInAntimatterChallenge)) return false;
@@ -88,6 +88,7 @@ export class Galaxy {
 
   static get lockText() {
     if (this.canBeBought) return "The Physics of this Timeline do not allow for the purchase of Galaxies. Good luck, weak little fool!";
+    if (UltimateChallenge(3).isRunning) return "Locked (THE ULTIMATE CHALLENGE III)";
     if (EternityChallenge(6).isRunning) return "Locked (Eternity Challenge 6)";
     if (InfinityChallenge(8).isRunning) return "Locked (Infinity Challenge 8)";
     if (UltimateChallenge(2).isRunning) return "Locked (THE ULTIMATE CHALLENGE II)";
@@ -116,7 +117,7 @@ export class Galaxy {
     if (galaxies >= Galaxy.remoteStart) {
       return GALAXY_TYPE.REMOTE;
     }
-    if (EternityChallenge(5).isRunning || galaxies >= this.costScalingStart) {
+    if (EternityChallenge(5).isRunning || UltimateChallenge(3).isRunning || galaxies >= this.costScalingStart) {
       return GALAXY_TYPE.DISTANT;
     }
     return GALAXY_TYPE.NORMAL;

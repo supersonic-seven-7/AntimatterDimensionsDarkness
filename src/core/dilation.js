@@ -115,6 +115,17 @@ export function getTachyonGalaxyMult(thresholdUpgrade) {
   return (1 + thresholdMult * glyphReduction) ** power;
 }
 
+export function getTachyonAmplifierPower() {
+  let base = 1.01 + UltimateChallenge(3).reward.effectOrDefault(0);
+  let strength = 1;
+  return base ** strength;
+}
+
+export function getTotalTachyonAmplifierPower() {
+  let power = getTachyonAmplifierPower();
+  return Math.pow(power, player.dilation.totalTachyonGalaxies);
+}
+
 export function getDilationGainPerSecond() {
   if (Pelle.isDoomed) {
     const tachyonEffect = Currency.tachyonParticles.value.pow(PelleRifts.paradox.milestones[1].effectOrDefault(1));
@@ -145,8 +156,7 @@ export function getDilationGainPerSecond() {
 export function tachyonGainMultiplier() {
   if (Pelle.isDisabled("tpMults")) return new Decimal(1);
   const pow = Enslaved.isRunning ? Enslaved.tachyonNerf : 1;
-  //return DC.D1.timesEffectsOf(...
-  return DC.D0.timesEffectsOf(
+  return DC.D1.timesEffectsOf(
     DilationUpgrade.tachyonGain,
     GlyphSacrifice.dilation,
     Achievement(132),
@@ -170,7 +180,7 @@ export function getBaseTP(antimatter, requireEternity) {
   const am = (isInCelestialReality() || Pelle.isDoomed)
     ? antimatter
     : Ra.unlocks.unlockDilationStartingTP.effectOrDefault(antimatter);
-  let baseTP = Decimal.pow(Decimal.log10(am) / 400, 1.5);
+  let baseTP = Decimal.pow(Decimal.log10(am) / 3000, 1.5);
   if (Enslaved.isRunning) baseTP = baseTP.pow(Enslaved.tachyonNerf);
   return baseTP;
 }
@@ -192,7 +202,7 @@ export function getTachyonReq() {
   if (Enslaved.isRunning) effectiveTP = effectiveTP.pow(1 / Enslaved.tachyonNerf);
   return Decimal.pow10(
     effectiveTP
-      .times(Math.pow(400, 1.5))
+      .times(Math.pow(3000, 1.5))
       .pow(2 / 3)
       .toNumber()
   );
@@ -216,7 +226,7 @@ export function getDilationTimeEstimate(goal) {
 
 export function dilatedValueOf(value) {
   const log10 = value.log10();
-  const dilationPenalty = 0.75 * Effects.product(DilationUpgrade.dilationPenalty);
+  const dilationPenalty = 0.64 * Effects.product(DilationUpgrade.dilationPenalty);
   return Decimal.pow10(Math.sign(log10) * Math.pow(Math.abs(log10), dilationPenalty));
 }
 

@@ -69,6 +69,7 @@ export const DC = deepFreeze({
   C2P30:                    Decimal.pow(2, 30),
   C2P1024:                  Decimal.pow(2, 1024),
   C10P16000D3:              Decimal.pow(10, 16000 / 3),
+  C10P32000D3:              Decimal.pow(10, 32000 / 3),
 
   // 1e1 is 10
   E1:                   new Decimal("1e1"),
@@ -80,6 +81,7 @@ export const DC = deepFreeze({
   E9:                   new Decimal("1e9"),
   E10:                  new Decimal("1e10"),
   E12:                  new Decimal("1e12"),
+  E13:                  new Decimal("1e13"),
   E15:                  new Decimal("1e15"),
   E20:                  new Decimal("1e20"),
   E25:                  new Decimal("1e25"),
@@ -164,6 +166,7 @@ export const DC = deepFreeze({
   E6000:                new Decimal("1e6000"),
   E6375:                new Decimal("1e6375"),
   E6750:                new Decimal("1e6750"),
+  E7000:                new Decimal("1e7000"),
   E8000:                new Decimal("1e8000"),
   E9000:                new Decimal("1e9000"),
   E10000:               new Decimal("1e10000"),
@@ -194,6 +197,7 @@ export const DC = deepFreeze({
   E45000:               new Decimal("1e45000"),
   E54000:               new Decimal("1e54000"),
   E55400:               new Decimal("1e55400"),
+  E56000:               new Decimal("1e56000"),
   E60000:               new Decimal("1e60000"),
   E65625:               new Decimal("1e65625"),
   E69250:               new Decimal("1e69250"),
@@ -234,6 +238,7 @@ export const DC = deepFreeze({
   E4E7:                 new Decimal("1e40000000"),
   E6E7:                 new Decimal("1e60000000"),
   E1E8:                 new Decimal("1e100000000"),
+  E3E9:                 new Decimal("1e3000000000"),
   E1_5E12:              new Decimal("1e1500000000000"),
   E1E15:                new Decimal("1e1000000000000000"),
 });

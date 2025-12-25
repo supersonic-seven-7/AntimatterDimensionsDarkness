@@ -86,14 +86,14 @@ export const realityUpgrades = [
     name: "Innumerably Construct",
     id: 7,
     cost: 15,
-    requirement: "Complete your first Infinity with at most 1 Antimatter Galaxy",
-    hasFailed: () => !(player.galaxies <= 1 && player.requirementChecks.reality.noInfinities),
-    checkRequirement: () => player.galaxies <= 1 && player.requirementChecks.reality.noInfinities,
+    requirement: "Complete your first Infinity with at most 8 Dimension Boosts",
+    hasFailed: () => !(player.dimensionBoosts <= 8 && player.requirementChecks.reality.noInfinities),
+    checkRequirement: () => player.dimensionBoosts <= 8 && player.requirementChecks.reality.noInfinities,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
     canLock: true,
-    lockEvent: "gain another Antimatter Galaxy",
-    description: "Infinity gain is boosted from Antimatter Galaxy count",
-    effect: () => 1 + player.galaxies / 30,
+    lockEvent: "gain more than 8 Dimboosts",
+    description: "Infinity gain is boosted from Dimension Boost count",
+    effect: () => 1 + Math.sqrt(player.dimensionBoosts / 30),
     formatEffect: value => formatX(value, 2, 2)
   },
   {
@@ -114,7 +114,7 @@ export const realityUpgrades = [
     name: "Linguistically Expand",
     id: 9,
     cost: 15,
-    requirement: () => `Eternity for ${format("1e4000")} Eternity Points using
+    requirement: () => `Eternity for ${format("1e8000")} Eternity Points using
       only a single Glyph which must be level ${formatInt(3)}+.`,
     hasFailed: () => {
       const invalidEquippedGlyphs = Glyphs.activeWithoutCompanion.length > 1 ||
@@ -122,7 +122,7 @@ export const realityUpgrades = [
       const hasValidGlyphInInventory = Glyphs.inventory.countWhere(g => g && g.level >= 3) > 0;
       return invalidEquippedGlyphs || (Glyphs.activeWithoutCompanion.length === 0 && !hasValidGlyphInInventory);
     },
-    checkRequirement: () => Currency.eternityPoints.exponent >= 4000 &&
+    checkRequirement: () => Currency.eternityPoints.exponent >= 8000 &&
       Glyphs.activeWithoutCompanion.length === 1 && Glyphs.activeWithoutCompanion[0].level >= 3,
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
     canLock: true,
@@ -134,14 +134,14 @@ export const realityUpgrades = [
     name: "Existentially Prolong",
     id: 10,
     cost: 15,
-    requirement: () => `Complete your first manual Eternity with at least ${formatPostBreak(DC.E400)} Infinity Points`,
+    requirement: () => `Complete your first manual Eternity with at least ${formatPostBreak(DC.E7000)} Infinity Points`,
     hasFailed: () => !player.requirementChecks.reality.noEternities,
-    checkRequirement: () => Currency.infinityPoints.exponent >= 400 &&
+    checkRequirement: () => Currency.infinityPoints.exponent >= 7000 &&
       player.requirementChecks.reality.noEternities,
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
     canLock: true,
     lockEvent: "Eternity",
-    bypassLock: () => Currency.infinityPoints.exponent >= 400,
+    bypassLock: () => Currency.infinityPoints.exponent >= 7000,
     description: () => `Start every Reality with ${formatInt(100)} Eternities (also applies to current Reality)`,
     automatorPoints: 15,
     shortDescription: () => `Start with ${formatInt(100)} Eternities`,
@@ -151,8 +151,8 @@ export const realityUpgrades = [
     name: "The Boundless Flow",
     id: 11,
     cost: 50,
-    requirement: () => `${format(Currency.infinitiesBanked.value, 2)}/${format(DC.E12)} Banked Infinities`,
-    checkRequirement: () => Currency.infinitiesBanked.exponent >= 12,
+    requirement: () => `${format(Currency.infinitiesBanked.value, 2)}/${format(DC.E13)} Banked Infinities`,
+    checkRequirement: () => Currency.infinitiesBanked.exponent >= 13,
     checkEvent: [GAME_EVENT.ETERNITY_RESET_AFTER, GAME_EVENT.REALITY_FIRST_UNLOCKED],
     description: "Every second, gain 10% of the Infinities you would normally gain by Infinitying",
     automatorPoints: 5,
@@ -180,9 +180,9 @@ export const realityUpgrades = [
     name: "The Telemechanical Process",
     id: 13,
     cost: 50,
-    requirement: () => `Eternity for ${format(DC.E4000)} Eternity Points without Time Dim. 5-8`,
+    requirement: () => `Eternity for ${format(DC.E8000)} Eternity Points without Time Dim. 5-8`,
     hasFailed: () => !Array.range(5, 4).every(i => TimeDimension(i).amount.equals(0)),
-    checkRequirement: () => Currency.eternityPoints.exponent >= 4000 &&
+    checkRequirement: () => Currency.eternityPoints.exponent >= 8000 &&
       Array.range(5, 4).every(i => TimeDimension(i).amount.equals(0)),
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
     canLock: true,
@@ -195,8 +195,8 @@ export const realityUpgrades = [
     name: "The Eternal Flow",
     id: 14,
     cost: 50,
-    requirement: () => `${format(Currency.eternities.value, 2)}/${format(1e7)} Eternities`,
-    checkRequirement: () => Currency.eternities.gte(1e7),
+    requirement: () => `${format(Currency.eternities.value, 2)}/${format(1e8)} Eternities`,
+    checkRequirement: () => Currency.eternities.gte(1e8),
     checkEvent: [GAME_EVENT.ETERNITY_RESET_AFTER, GAME_EVENT.REALITY_FIRST_UNLOCKED],
     description: "Gain Eternities per second equal to your Reality count",
     automatorPoints: 5,
@@ -304,20 +304,20 @@ export const realityUpgrades = [
     name: "Cosmic Conglomerate",
     id: 21,
     cost: 100000,
-    requirement: () => `${formatInt(Replicanti.galaxies.total + player.galaxies +
-      player.dilation.totalTachyonGalaxies)}/${formatInt(2800)} total Galaxies from all types`,
+    requirement: () => `${formatPostBreak(player.records.thisReality.bestAMUC3)}/${formatPostBreak("1e2466")} record Antimatter
+      in THE ULTIMATE CHALLENGE III`,
     checkRequirement: () =>
-      Replicanti.galaxies.total + player.galaxies + player.dilation.totalTachyonGalaxies >= 2800,
+      player.records.thisReality.bestAMUC3.gte(1e2466),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    description: () => `Remote Antimatter Galaxy scaling is moved to ${formatInt(1e5)} galaxies`,
+    description: () => `Increase the power effect per Tachyon Amplifier by ${formatPercents(0.05)}`,
     effect: 1e5
   },
   {
     name: "Temporal Transcendence",
     id: 22,
     cost: 100000,
-    requirement: () => `${format(Currency.timeShards.value, 1)}/${format(DC.E28000)} Time Shards`,
-    checkRequirement: () => Currency.timeShards.exponent >= 28000,
+    requirement: () => `${format(Currency.timeShards.value, 1)}/${format(DC.E56000)} Time Shards`,
+    checkRequirement: () => Currency.timeShards.exponent >= 56000,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     description: "Time Dimension multiplier based on days spent in this Reality",
     effect: () => Decimal.pow10(Math.pow(1 + 2 * Math.log10(Time.thisReality.totalDays + 1), 1.6)),
@@ -355,8 +355,8 @@ export const realityUpgrades = [
     name: "Effortless Existence",
     id: 25,
     cost: 100000,
-    requirement: () => `Reach ${format(DC.E11111)} EP (Best: ${format(player.records.bestReality.bestEP, 2)} EP)`,
-    checkRequirement: () => player.records.bestReality.bestEP.exponent >= 11111,
+    requirement: () => `Reach ${format(DC.D2E22222)} EP (Best: ${format(player.records.bestReality.bestEP, 2)} EP)`,
+    checkRequirement: () => player.records.bestReality.bestEP.log10() >= 22222.3,
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
     description: "Unlock the Reality autobuyer and Automator command",
     automatorPoints: 100,

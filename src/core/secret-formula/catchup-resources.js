@@ -155,7 +155,7 @@ export const catchupResources = [
     name: "Reality",
     id: 20,
     requiredStage: PROGRESS_STAGE.EARLY_REALITY,
-    description: () => `Reality is the third and final main reset layer. Reaching ${format(DC.E4000)} Eternity Points
+    description: () => `Reality is the third and final main reset layer. Reaching ${format(DC.E8000)} Eternity Points
       gives you the option to reset everything up to this point in exchange for unlocking new content and gaining
       access to new resources.`
   },

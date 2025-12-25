@@ -487,7 +487,7 @@ export const celestialNavigation = {
       if (EffarigUnlock.reality.isUnlocked) return 1;
       if (!Effarig.isRunning) return 0;
 
-      return Currency.eternityPoints.value.pLog10() / 4000;
+      return Currency.eternityPoints.value.pLog10() / 8000;
     },
     node: {
       clickAction: () => Tab.celestials.effarig.show(true),
@@ -505,7 +505,7 @@ export const celestialNavigation = {
         text: complete => {
           if (complete >= 1) return "Effarig's Reality";
           const ep = Effarig.isRunning ? Currency.eternityPoints.value : 0;
-          const goal = DC.E4000;
+          const goal = DC.E8000;
           return [
             "Effarig's Reality",
             `Reach ${format(ep, 2)} / ${format(goal, 2)}`,
@@ -654,7 +654,7 @@ export const celestialNavigation = {
       if (Enslaved.isCompleted) return 1;
       if (!Enslaved.isRunning) return 0;
 
-      return Currency.eternityPoints.value.pLog10() / 4000;
+      return Currency.eternityPoints.value.pLog10() / 8000;
     },
     node: {
       clickAction: () => Tab.celestials.enslaved.show(true),
@@ -672,7 +672,7 @@ export const celestialNavigation = {
         text: complete => {
           if (complete >= 1) return "The Nameless Ones' Reality";
           const ep = Enslaved.isRunning ? Currency.eternityPoints.value : 0;
-          const goal = DC.E4000;
+          const goal = DC.E8000;
           return [
             "The Nameless Ones' Reality",
             `Reach ${format(ep, 2)} / ${format(goal, 2)}`,
@@ -1808,7 +1808,7 @@ export const celestialNavigation = {
     complete: () => {
       if (Pelle.isUnlocked) return 1;
       const imCost = Math.clampMax(emphasizeEnd(Math.log10(Currency.imaginaryMachines.value) / Math.log10(1.6e15)), 1);
-      let laitelaProgress = Laitela.isRunning ? Math.min(Currency.eternityPoints.value.log10() / 4000, 0.99) : 0;
+      let laitelaProgress = Laitela.isRunning ? Math.min(Currency.eternityPoints.value.log10() / 8000, 0.99) : 0;
       if (Laitela.difficultyTier !== 8 || Glyphs.activeWithoutCompanion.length > 1) laitelaProgress = 0;
       else if (ImaginaryUpgrade(25).isAvailableForPurchase) laitelaProgress = 1;
       return (imCost + laitelaProgress) / 2;
@@ -1829,7 +1829,7 @@ export const celestialNavigation = {
               "The Celestial of Antimatter"
             ];
           }
-          let laitelaString = `${format(Currency.eternityPoints.value)} / ${format("1e4000")} EP`;
+          let laitelaString = `${format(Currency.eternityPoints.value)} / ${format("1e8000")} EP`;
           if (!Laitela.isRunning || Laitela.difficultyTier !== 8 || Glyphs.activeWithoutCompanion.length > 1) {
             laitelaString = "Lai'tela's Reality is still intact";
           } else if (ImaginaryUpgrade(25).isAvailableForPurchase) {

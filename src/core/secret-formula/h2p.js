@@ -233,14 +233,14 @@ ${PlayerProgress.infinityUnlocked() ? "- <b>IP</b>: Infinity Point<br>" : ""}
 ${PlayerProgress.infinityUnlocked() ? "- <b>NC</b>: Normal Challenge<br>" : ""}
 ${PlayerProgress.infinityUnlocked() ? "- <b>IC</b>: Infinity Challenge<br>" : ""}
 ${InfinityDimension(1).isUnlocked || PlayerProgress.eternityUnlocked() ? "- <b>ID</b>: Infinity Dimension<br>" : ""}
-${PlayerProgress.replicantiUnlocked() ? "- <b>RG</b>: Replicanti Booster<br>" : ""}
+${PlayerProgress.replicantiUnlocked() ? "- <b>RB</b>: Replicanti Booster<br>" : ""}
 ${PlayerProgress.eternityUnlocked() ? "- <b>EP</b>: Eternity Point<br>" : ""}
 ${PlayerProgress.eternityUnlocked() ? "- <b>TT</b>: Time Theorem<br>" : ""}
 ${PlayerProgress.eternityUnlocked() ? "- <b>TD</b>: Time Dimension<br>" : ""}
 ${PlayerProgress.eternityUnlocked() ? "- <b>EC</b>: Eternity Challenge<br>" : ""}
 ${PlayerProgress.dilationUnlocked() ? "- <b>TP</b>: Tachyon Particle<br>" : ""}
 ${PlayerProgress.dilationUnlocked() ? "- <b>DT</b>: Dilated Time<br>" : ""}
-${PlayerProgress.dilationUnlocked() ? "- <b>TG</b>: Tachyon Galaxy<br>" : ""}
+${PlayerProgress.dilationUnlocked() ? "- <b>TA</b>: Tachyon Amplifier<br>" : ""}
 ${PlayerProgress.realityUnlocked() ? "- <b>RM</b>: Reality Machine<br>" : ""}
 ${PlayerProgress.realityUnlocked() ? "- <b>AP</b>: Automator Point<br>" : ""}
 ${PlayerProgress.realityUnlocked() ? "- <b>BH</b>: Black Hole<br>" : ""}
@@ -868,7 +868,7 @@ antimatter earned in the current Dilation. As a result, you generally cannot inc
 you have gained a TP multiplier or are able to significantly increase your antimatter in Dilation.
 <br>
 <br>
-Tachyon Particles generate another currency called Dilated Time. Dilated Time is translated into Tachyon Galaxies by
+Tachyon Particles generate another currency called Dilated Time. Dilated Time is translated into Tachyon Amplifiers by
 reaching thresholds similarly to the Tickspeed Upgrades gained from Time Dimensions.
 <br>
 <br>
@@ -882,7 +882,7 @@ also be repeatedly bought, but eventually reaches a cap.
     }, {
       name: "Reality",
       info: () => `
-When you reach ${formatPostBreak(DC.E4000)} EP and have completed the first
+When you reach ${formatPostBreak(DC.E8000)} EP and have completed the first
 ${formatInt(13)} rows of Achievements, you will be able to purchase the Time Study that unlocks Reality.
 Unlocking it opens a new tab, where you can find the button to make a new Reality. Starting a new Reality
 will reset almost the entire game up to this point, but in exchange gives
@@ -913,9 +913,9 @@ currency that can be spent in the Perks subtab on different Perks.
 <br>
 Reality Machines scale purely off of EP, and the Reality button will tell you how much EP you need in order to gain
 the next one. The first ${formatInt(10)} RM scale linearly in the exponent between
-${formatPostBreak(DC.E4000)} EP and ${formatPostBreak(DC.C10P16000D3)} EP, and then past that
-RM = ${formatInt(1000)}<sup>log<sub>${formatInt(10)}</sub>(EP)/${formatInt(4000)}-${formatInt(1)}</sup>. This formula
-is higher RM gain than linear above ${formatPostBreak(DC.C10P16000D3)} EP.
+${formatPostBreak(DC.E8000)} EP and ${formatPostBreak(DC.C10P32000D3)} EP, and then past that
+RM = ${formatInt(1000)}<sup>log<sub>${formatInt(10)}</sub>(EP)/${formatInt(8000)}-${formatInt(1)}</sup>. This formula
+is higher RM gain than linear above ${formatPostBreak(DC.C10P32000D3)} EP.
 <br>
 <br>
 Glyph level scales off of a combination of Eternity Points, Replicanti, and Dilated Time, with a minimum level of

@@ -117,7 +117,7 @@ export const GlyphSelection = {
 };
 
 export function isRealityAvailable() {
-  return player.records.thisReality.maxEP.exponent >= 4000 && TimeStudy.reality.isBought;
+  return player.records.thisReality.maxEP.exponent >= 8000 && TimeStudy.reality.isBought;
 }
 
 // Returns the number of "extra" realities from stored real time or Multiversal effects, should be called

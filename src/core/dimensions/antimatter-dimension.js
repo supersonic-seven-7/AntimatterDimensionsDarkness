@@ -11,7 +11,7 @@ export function antimatterDimensionCommonMultiplier() {
   multiplier = multiplier.times(ShopPurchase.dimPurchases.currentMult);
   multiplier = multiplier.times(ShopPurchase.allDimPurchases.currentMult);
 
-  if (!EternityChallenge(9).isRunning) {
+  if (!EternityChallenge(9).isRunning && !UltimateChallenge(3).isRunning) {
     multiplier = multiplier.times(Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).max(1));
   }
   multiplier = multiplier.timesEffectsOf(
@@ -50,6 +50,7 @@ export function antimatterDimensionCommonMultiplier() {
   if (UltimateChallenge(2).isRunning) multiplier = multiplier.timesEffectOf(InfinityChallenge(4));
   if (UltimateChallenge(2).isRunning) multiplier = multiplier.timesEffectOf(InfinityChallenge(9));
   if (UltimateChallenge(2).isRunning) multiplier = multiplier.dividedByEffectOf(InfinityChallenge(7));
+  if (UltimateChallenge(3).isRunning) multiplier = multiplier.timesEffectOf(EternityChallenge(10));
 
   if (Pelle.isDoomed) multiplier = multiplier.dividedBy(10);
 
@@ -57,16 +58,25 @@ export function antimatterDimensionCommonMultiplier() {
 }
 
 export function getDimensionFinalMultiplierUncached(tier) {
+  let challMult = DC.D1;
   if (tier < 1 || tier > 8) throw new Error(`Invalid Antimatter Dimension tier ${tier}`);
-  if ((NormalChallenge(10).isRunning || UltimateChallenge(1).isRunning) && tier > 6) return DC.D1;
-  if (EternityChallenge(11).isRunning) {
-    return Currency.infinityPower.value.pow(
+  if ((NormalChallenge(10).isRunning || UltimateChallenge(1).isRunning) && tier > 6) challMult = DC.D1;
+  if (EternityChallenge(11).isRunning || UltimateChallenge(3).isRunning) {
+    challMult = Currency.infinityPower.value.pow(
       InfinityDimensions.powerConversionRate
     ).max(1).times(DimBoost.multiplierToNDTier(tier));
   }
+  if (((NormalChallenge(10).isRunning || UltimateChallenge(1).isRunning) && tier > 6) ||
+    EternityChallenge(11).isRunning || UltimateChallenge(3).isRunning) {
+    const glyphDilationPowMultiplier = getAdjustedGlyphEffect("dilationpow");
+    if (player.dilation.active || PelleStrikes.dilation.hasStrike) {
+      challMult = dilatedValueOf(challMult.pow(glyphDilationPowMultiplier));
+    }
+    return challMult;
+  }
 
   let multiplier = DC.D1;
-
+  
   multiplier = applyNDMultipliers(multiplier, tier);
   multiplier = applyNDPowers(multiplier, tier);
 
@@ -452,13 +462,13 @@ class AntimatterDimensionState extends DimensionState {
   get rateOfChange() {
     const tier = this.tier;
     if (tier === 8 ||
-      (tier > 3 && EternityChallenge(3).isRunning) ||
+      (tier > 3 && (EternityChallenge(3).isRunning || UltimateChallenge(3).isRunning)) ||
       (tier > 6 && (NormalChallenge(12).isRunning || UltimateChallenge(1).isRunning))) {
       return DC.D0;
     }
 
     let toGain;
-    if (tier === 7 && EternityChallenge(7).isRunning) {
+    if (tier === 7 && (EternityChallenge(7).isRunning || UltimateChallenge(3).isRunning)) {
       toGain = InfinityDimension(1).productionPerSecond.times(10);
     } else if (NormalChallenge(12).isRunning || UltimateChallenge(1).isRunning) {
       toGain = AntimatterDimension(tier + 2).productionPerSecond;
@@ -473,7 +483,7 @@ class AntimatterDimensionState extends DimensionState {
    */
   get isProducing() {
     const tier = this.tier;
-    if ((EternityChallenge(3).isRunning && tier > 4) ||
+    if (((EternityChallenge(3).isRunning || UltimateChallenge(3).isRunning) && tier > 4) ||
       ((NormalChallenge(10).isRunning || UltimateChallenge(1).isRunning) && tier > 6) ||
       (Laitela.isRunning && tier > Laitela.maxAllowedDimension)) {
       return false;
@@ -688,7 +698,7 @@ export const AntimatterDimensions = {
     const hasBigCrunchGoal = !player.break || Player.isInAntimatterChallenge;
     if (hasBigCrunchGoal && Currency.antimatter.gte(Player.infinityGoal)) return;
 
-    let maxTierProduced = EternityChallenge(3).isRunning ? 3 : 7;
+    let maxTierProduced = (EternityChallenge(3).isRunning || UltimateChallenge(3).isRunning) ? 3 : 7;
     let nextTierOffset = 1;
     if (NormalChallenge(12).isRunning || UltimateChallenge(1).isRunning) {
       maxTierProduced--;
